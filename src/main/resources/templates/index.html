@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Weather Service</title>
+</head>
+<body>
+
+<form id="weatherForm" method="post" action=" ">
+    <p>
+    <h2>Choose the city:</h2></p>
+    <input type="checkbox" name="city" id="kazan" value="Kazan">Kazan<Br>
+    <input type="checkbox" name="city" id="moscow" value="Moscow">Moscow<Br>
+    <input type="checkbox" name="city" id="stpetersburg" value="___">Saint Petersburg<Br>
+    <input type="checkbox" name="city" id="london" value="London">London<Br>
+    <input type="checkbox" name="city" id="newyork" value="New York">New York<Br>
+    <p><input type="submit" id="submit" value="Get"></p>
+</form>
+
+<br/>
+<div id="result"></div>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script>
+    $(document).ready(function () {
+
+        $('#weatherForm').submit(function (e) {
+            e.preventDefault();
+            var cities = $('input[name="city"]:checked');
+            var citiesData = new Array();
+            cities.each(function () {
+                citiesData.push(this.value);
+            });
+            $.ajax({
+                type: "GET",
+                contentType: "application/json",
+                url: "/api/getWeather",
+                data: {
+                    cities: citiesData
+                },
+                success: function (data) {
+                    var res = '<ul>';
+                    $.each(data, function (index, value) {
+                        res += '<li>' + value + '</li>'
+                    });
+                    res += '</ul>';
+                    console.log(res);
+                    console.log(data);
+                    $('#result').html(res);
+                }
+            });
+        })
+    })
+    ;
+</script>
+</body>
+</html>

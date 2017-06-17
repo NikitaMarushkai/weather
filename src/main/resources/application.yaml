@@ -1,0 +1,12 @@
+server:
+  address: 0.0.0.0
+  port: 8080
+  context-path: /
+  display-name: Exam weather service
+
+
+
+spring:
+  thymeleaf:
+    cache: false
+    mode: LEGACYHTML5
